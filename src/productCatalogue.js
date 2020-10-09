@@ -43,11 +43,19 @@ class Catalogue {
   // batchAddProducts(batch) {
   //   return undefined
   // }
+  // ----------------------------
+  // batchAddProducts(batch) {
+  //   batch.products.forEach( p => 
+  //      this.addProduct(p)
+  //   )
+  //   return batch.products.length
+  // }
   batchAddProducts(batch) {
-    batch.products.forEach( p => 
-       this.addProduct(p)
+    const validAdditions = batch.products.filter(
+      (product) => product.quantityInStock > 0
     )
-    return batch.products.length
+    validAdditions.forEach((p) => this.addProduct(p) );
+    return validAdditions.length;
   }
   
 }
