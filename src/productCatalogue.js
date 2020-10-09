@@ -89,6 +89,25 @@ class Catalogue {
       .reduce((acc, p) => acc + 1, 0);
     return noProductsAdded;
   }
+
+  search(specifiedObj){
+    const result = { type: "Search", productIds: [] };
+    if(specifiedObj.price){
+      result.productIds = this.products
+        .filter((p) => p.price <= specifiedObj.price)
+        .map((p) => p.id);
+    }else if(specifiedObj.keyword){
+      result.productIds = this.products
+        .filter((p) => p.name.search(specifiedObj.keyword)>=0)
+        .map((p) => p.id);
+      if(result.productIds.length===0) {
+        throw new Error("Bad Search");
+      }
+    }
+    
+    
+    return result;
+  }
   
 }
 module.exports = Catalogue;
